@@ -47,7 +47,7 @@
 </div>
 
 <script>
-    const URL_GAS = "https://script.google.com/macros/library/d/1HkKS7fRBrXSVtMjuPGp5ynGChPIjnfC1afkAuJR3Fy0dsUTgeW3YSzU5/6"; // REEMPLAZA ESTO POR TU URL DE GOOGLE
+    const URL_GAS = "https://script.google.com/macros/s/AKfycbya9lPKK6NmngUIz928EsmxksY9RQ2OUNSuSudKHA45q_yUT_RCpatWeH7wdz04Ki3rtw/exec"; // REEMPLAZA ESTO POR TU URL DE GOOGLE
 
     const datos = [
         { e: "Edna Beltrán, Mirbony Vasquez", t: "Innovación educativa a través de la gamificación...", d: "Juan Camilo Ortegón" },
@@ -98,8 +98,8 @@
                         <b>${p.t}</b>
                         <div class="info">Estudiantes: ${p.e}</div>
                         <select class="fsel" style="margin-top:10px;">`;
-                if((cupos["18-mayo"] || 0) < 5) html += `<option value="18 de mayo">18 de mayo (5:00 PM)</option>`;
-                if((cupos["19-mayo"] || 0) < 5) html += `<option value="19 de mayo">19 de mayo (5:00 PM)</option>`;
+                if((cupos["18-mayo"] || 0) < 6) html += `<option value="18 de mayo">18 de mayo (5:00 PM)</option>`;
+                if((cupos["19-mayo"] || 0) < 6) html += `<option value="19 de mayo">19 de mayo (5:00 PM)</option>`;
                 html += `</select></div>`;
                 document.getElementById('fechas').innerHTML += html;
             });
