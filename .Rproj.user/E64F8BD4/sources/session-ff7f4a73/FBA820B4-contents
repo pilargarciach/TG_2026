@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sustentaciones MIE – [GRUPO U01]</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; }
+        .box { max-width: 750px; background: white; margin: auto; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; text-align: center; border-bottom: 3px solid #27ae60; padding-bottom: 10px; font-size: 1.2rem; }
+        .proyecto { background: #fff; border: 1px solid #ddd; border-left: 6px solid #27ae60; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+        .info { font-size: 0.85rem; color: #555; margin-top: 5px; }
+        .hidden { display: none; }
+        button { width: 100%; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Selección de horario TRABAJO DE GRADO MIE – [GRUPO U01]</h2>
+    <p style="text-align:center; font-weight:bold;">Tutora Dra. María del Pilar García Chitiva</p>
+    
+    <div id="paso1">
+        <label>Su nombre (Director):</label>
+        <input type="text" id="nombreProf" placeholder="Nombre completo">
+        <label>Su correo:</label>
+        <input type="email" id="correoProf" placeholder="usuario@correo.com">
+        <button onclick="irAPaso2()">Ingresar</button>
+    </div>
+
+    <div id="paso2" class="hidden">
+        <p>Seleccione los proyectos que usted dirige/asesora:</p>
+        <div id="lista"></div>
+        <button onclick="irAPaso3()" style="background:#2c3e50;">Continuar a Horarios</button>
+    </div>
+
+    <div id="paso3" class="hidden">
+        <p id="msgCupos">Cargando disponibilidad...</p>
+        <div id="fechas"></div>
+        <button id="btnFinal" onclick="enviar()">Finalizar Registro</button>
+    </div>
+
+    <div id="final" class="hidden" style="text-align:center;">
+        <h2 style="color: #27ae60;">¡Registro Exitoso!</h2>
+        <p id="despedida"></p>
+    </div>
+</div>
+
+<script>
+    const URL_GAS = "https://script.google.com/macros/library/d/1HkKS7fRBrXSVtMjuPGp5ynGChPIjnfC1afkAuJR3Fy0dsUTgeW3YSzU5/4"; // REEMPLAZA ESTO POR TU URL DE GOOGLE
+
+    const datos = [
+        { e: "Edna Beltrán, Mirbony Vasquez", t: "Innovación educativa a través de la gamificación...", d: "Juan Camilo Ortegón" },
+        { e: "Rolando Alfonso Méndez García, Eliana Pérez Sandoval, Sandra Duarte Duarte", t: "Gamificación analógica como estrategia didáctica...", d: "Jaime Alberto Castro Martínez" },
+        { e: "Kerly Marcela Orozco, Andrea Magaly Ospitia, María Elena Alape", t: "Saberes ancestrales y narrativas digitales...", d: "Carlos Sandoval" },
+        { e: "Sofía Muñoz Gil, Angela Moreno Córdoba, Lorena Serna Duque", t: "Aprender jugando: el poder de la gamificación...", d: "Aura Cabarcas" },
+        { e: "Miguel Ángel Estrada Ramos", t: "Percepciones sobre entornos gamificados (Gastronomía)", d: "Angela Maria Ramirez Rozo" },
+        { e: "Jeisson Andrés Beltrán Parra", t: "Rendimiento académico SENA Cauca", d: "Camilo Mendieta" },
+        { e: "Lady Mayerly Gutiérrez Ariza", t: "La Lectoescritura en la Educación Básica", d: "Isabel Villada" },
+        { e: "Marleny Franco Romero", t: "Percepciones entornos gamificados (Overcooked/Minecraft)", d: "Camilo Mendieta" },
+        { e: "Didier Alonso Díaz Aristizabal", t: "Competencias digitales Moodle", d: "Gustavo Adolfo Diaz Contreras" }
+    ];
+
+    let seleccionados = [];
+
+    function irAPaso2() {
+        if(!document.getElementById('nombreProf').value) return alert("Por favor ingrese su nombre");
+        const listDiv = document.getElementById('lista');
+        listDiv.innerHTML = "";
+        datos.forEach((p, i) => {
+            listDiv.innerHTML += `
+                <div class="proyecto">
+                    <input type="checkbox" value="${i}" class="chk"> <b>${p.t}</b>
+                    <div class="info"><b>Estudiantes:</b> ${p.e}</div>
+                    <div class="info"><b>Director original:</b> ${p.d}</div>
+                </div>`;
+        });
+        document.getElementById('paso1').classList.add('hidden');
+        document.getElementById('paso2').classList.remove('hidden');
+    }
+
+    async function irAPaso3() {
+        const checks = document.querySelectorAll('.chk:checked');
+        if(checks.length === 0) return alert("Seleccione al menos un proyecto");
+        seleccionados = Array.from(checks).map(c => datos[c.value]);
+        
+        document.getElementById('paso2').classList.add('hidden');
+        document.getElementById('paso3').classList.remove('hidden');
+
+        try {
+            const r = await fetch(URL_GAS + "?t=" + Date.now());
+            const cupos = await r.json();
+            document.getElementById('msgCupos').classList.add('hidden');
+            
+            seleccionados.forEach((p, i) => {
+                let html = `
+                    <div class="proyecto">
+                        <b>${p.t}</b>
+                        <div class="info">Estudiantes: ${p.e}</div>
+                        <select class="fsel" style="margin-top:10px;">`;
+                if((cupos["18-mayo"] || 0) < 5) html += `<option value="18 de mayo">18 de mayo (5:00 PM)</option>`;
+                if((cupos["19-mayo"] || 0) < 5) html += `<option value="19 de mayo">19 de mayo (5:00 PM)</option>`;
+                html += `</select></div>`;
+                document.getElementById('fechas').innerHTML += html;
+            });
+        } catch(e) {
+            document.getElementById('msgCupos').innerText = "Elija su horario:";
+            seleccionados.forEach(p => {
+                document.getElementById('fechas').innerHTML += `
+                    <div class="proyecto">
+                        <b>${p.t}</b>
+                        <div class="info">Estudiantes: ${p.e}</div>
+                        <select class="fsel">
+                            <option value="18 de mayo">18 de mayo</option>
+                            <option value="19 de mayo">19 de mayo</option>
+                        </select>
+                    </div>`;
+            });
+        }
+    }
+
+    async function enviar() {
+        const btn = document.getElementById('btnFinal');
+        btn.disabled = true;
+        btn.innerText = "Guardando...";
+
+        const selects = document.querySelectorAll('.fsel');
+        const payloadProyectos = seleccionados.map((p, i) => {
+            return {
+                titulo: p.t,
+                estudiantes: p.e, // Aquí van todos los nombres
+                director: p.d,    // Director de la tabla
+                fecha: selects[i].value
+            };
+        });
+
+        await fetch(URL_GAS, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+                nombre: document.getElementById('nombreProf').value,
+                correo: document.getElementById('correoProf').value,
+                proyectos: payloadProyectos
+            })
+        });
+
+        document.getElementById('despedida').innerText = `Muchas gracias estimado profesor director de trabajo de grado, ${document.getElementById('nombreProf').value}.`;
+        document.getElementById('paso3').classList.add('hidden');
+        document.getElementById('final').classList.remove('hidden');
+    }
+</script>
+</body>
+</html>
