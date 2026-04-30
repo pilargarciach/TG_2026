@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Horarios MIE</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; color: #333; padding: 10px; }
+        .container { max-width: 800px; background: white; margin: 20px auto; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { font-size: 1.3rem; color: #1a3a5a; text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        h3 { text-align: center; font-size: 1rem; color: #555; }
+        .proyecto-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; background: #fafafa; border-left: 5px solid #3498db; }
+        .hidden { display: none; }
+        button { width: 100%; padding: 14px; background: #27ae60; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        button:disabled { background: #ccc; }
+        .info-sec { font-size: 0.85rem; color: #666; margin-top: 4px; }
+        input[type="text"], input[type="email"], select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .loading { text-align: center; color: #3498db; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Selección de horario sustentaciones de TRABAJO DE GRADO MIE – [GRUPO U01]</h1>
+    <h3>Tutora Dra. María del Pilar García Chitiva</h3>
+
+    <!-- PASO 1: LOGIN -->
+    <div id="paso1">
+        <label>Nombre del Director:</label>
+        <input type="text" id="nombre" placeholder="Ingrese su nombre completo">
+        <label>Correo Institucional:</label>
+        <input type="email" id="correo" placeholder="usuario@correo.com">
+        <button onclick="irAPaso2()">Ingresar al Sistema</button>
+    </div>
+
+    <!-- PASO 2: LISTADO DE PROYECTOS -->
+    <div id="paso2" class="hidden">
+        <p>Bienvenido profesor(a) <strong><span id="displayNombre"></span></strong>. Seleccione los trabajos de grado que dirige:</p>
+        <div id="listaProyectos"></div>
+        <button onclick="irAPaso3()">Consultar Disponibilidad de Fechas</button>
+    </div>
+
+    <!-- PASO 3: ASIGNACIÓN DE FECHAS -->
+    <div id="paso3" class="hidden">
+        <div id="statusCupos" class="loading hidden">Consultando cupos en tiempo real...</div>
+        <h4>Asigne una fecha para cada sustentación:</h4>
+        <div id="fechasContenedor"></div>
+        <button id="btnFinalizar" onclick="enviarDatos()">Confirmar y Guardar Selección</button>
+    </div>
+
+    <!-- PASO FINAL -->
+    <div id="mensajeFinal" class="hidden" style="text-align:center; padding: 30px;">
+        <h2 style="color: #27ae60;">¡Registro Exitoso!</h2>
+        <p id="textoDespedida" style="font-size: 1.1rem;"></p>
+    </div>
+</div>
+
+<script>
+    // URL DE TU GOOGLE APPS SCRIPT
+    const WEB_APP_URL = "https://script.google.com/macros/library/d/1G7I4zf2TNKprHwx-q0xgkZc0SxGsXXuzgfnIbveVd6L21grASiIOPpE-/3";
+
+    const proyectosData = [
+        { e: "Edna Beltrán, Mirbony Vasquez", t: "Innovación educativa a través de la gamificación como estrategia pedagógica para los estudiantes de 3° de educación básica primaria en la Concentración Francisco Javier Matiz en Guaduas – Cundinamarca.", d: "Juan Camilo Ortegón" },
+        { e: "Rolando Alfonso Méndez García, Eliana Pérez Sandoval, Sandra Duarte Duarte", t: "Gamificación analógica como estrategia didáctica para fortalecer la motivación en Lengua Castellana en estudiantes de séptimo grado", d: "Jaime Alberto Castro Martínez" },
+        { e: "Kerly Marcela Orozco, Andrea Magaly Ospitia, María Elena Alape", t: "Saberes ancestrales y narrativas digitales: una estrategia para el fortalecimiento de la identidad cultural del pueblo Nasa en estudiantes de grado sexto y séptimo", d: "Carlos Sandoval" },
+        { e: "Sofía Muñoz Gil, Angela Moreno Córdoba, Lorena Serna Duque", t: "Aprender jugando: el poder de la gamificación en la enseñanza del inglés como lengua extranjera", d: "Aura Cabarcas" },
+        { e: "Miguel Ángel Estrada Ramos", t: "Percepciones de estudiantes de gastronomía sobre el uso de entornos gamificados (Overcooked 2 y minecraft) como estrategias para el desarrollo de competencias practicas", d: "Angela Maria Ramirez Rozo" },
+        { e: "Jeisson Andrés Beltrán Parra", t: "Uso de la gamificación para la transformación del aprendizaje tecnológico: una propuesta para fortalecer la motivación y el rendimiento académico en el programa tecnológico en sistemas de teleinformática en el SENA Cauca.", d: "Camilo Mendieta" },
+        { e: "Lady Mayerly Gutiérrez Ariza", t: "La Lectoescritura en la Educación Básica: Importancia para el Aprendizaje y Estrategias Pedagógicas para su Fortalecimiento", d: "Isabel Villada" },
+        { e: "Marleny Franco Romero", t: "Percepciones de estudiantes de gastronomía sobre el uso de entornos gamificados (Overcooked 2 y minecraft) como estrategias para el desarrollo de competencias practicas", d: "Camilo Mendieta" },
+        { e: "Didier Alonso Díaz Aristizabal", t: "Desarrollo de competencias digitales en docentes en formación de la Escuela Normal Superior El Jardín (Pereira) mediante la implementación de un entorno virtual de aprendizaje basado en Moodle", d: "Gustavo Adolfo Diaz Contreras" }
+    ];
+
+    let usuario = { nombre: "", correo: "" };
+    let seleccionados = [];
+
+    function irAPaso2() {
+        usuario.nombre = document.getElementById('nombre').value;
+        usuario.correo = document.getElementById('correo').value;
+        if(!usuario.nombre || !usuario.correo) return alert("Por favor complete sus datos.");
+
+        document.getElementById('displayNombre').innerText = usuario.nombre;
+        const lista = document.getElementById('listaProyectos');
+        lista.innerHTML = "";
+        
+        proyectosData.forEach((p, i) => {
+            lista.innerHTML += `
+                <div class="proyecto-card">
+                    <input type="checkbox" class="chkP" data-idx="${i}"> 
+                    <strong>${p.t}</strong>
+                    <div class="info-sec"><strong>Director:</strong> ${p.d}</div>
+                    <div class="info-sec"><strong>Estudiantes:</strong> ${p.e}</div>
+                </div>`;
+        });
+
+        document.getElementById('paso1').classList.add('hidden');
+        document.getElementById('paso2').classList.remove('hidden');
+        window.scrollTo(0,0);
+    }
+
+    async function irAPaso3() {
+        const checks = document.querySelectorAll('.chkP:checked');
+        if(checks.length === 0) return alert("Seleccione al menos un proyecto.");
+
+        seleccionados = Array.from(checks).map(c => proyectosData[c.dataset.idx]);
+        
+        document.getElementById('paso2').classList.add('hidden');
+        document.getElementById('paso3').classList.remove('hidden');
+        const status = document.getElementById('statusCupos');
+        const contenedor = document.getElementById('fechasContenedor');
+        
+        status.classList.remove('hidden');
+        contenedor.innerHTML = "";
+
+        try {
+            // Consultar cupos actuales al Google Apps Script (doGet)
+            const resp = await fetch(WEB_APP_URL);
+            const cupos = await resp.json();
+            status.classList.add('hidden');
+
+            seleccionados.forEach((p, i) => {
+                let opciones = "";
+                // Validar cupos (Máximo 5 por día)
+                if (cupos["18 de mayo 2026 - 5:00 PM"] < 5) {
+                    opciones += `<option value="18 de mayo 2026 - 5:00 PM">18 de Mayo (Cupos disp: ${5 - cupos["18 de mayo 2026 - 5:00 PM"]})</option>`;
+                }
+                if (cupos["19 de mayo 2026 - 5:00 PM"] < 5) {
+                    opciones += `<option value="19 de mayo 2026 - 5:00 PM">19 de Mayo (Cupos disp: ${5 - cupos["19 de mayo 2026 - 5:00 PM"]})</option>`;
+                }
+
+                if (opciones === "") opciones = "<option disabled>Sin cupos disponibles para esta sustentación</option>";
+
+                contenedor.innerHTML += `
+                    <div class="proyecto-card">
+                        <strong>${p.t}</strong>
+                        <div class="info-sec">Director: ${p.d}</div>
+                        <select class="selFecha" style="margin-top:10px;">${opciones}</select>
+                    </div>`;
+            });
+        } catch (e) {
+            alert("Error al conectar con el servidor de cupos.");
+            console.error(e);
+        }
+    }
+
+    async function enviarDatos() {
+        const btn = document.getElementById('btnFinalizar');
+        btn.disabled = true;
+        btn.innerText = "Guardando selección...";
+
+        const selects = document.querySelectorAll('.selFecha');
+        const reporteFinal = seleccionados.map((p, i) => {
+            return `PROYECTO: ${p.t} | FECHA: ${selects[i].value}`;
+        }).join(" // ");
+
+        const payload = {
+            nombre: usuario.nombre,
+            correo: usuario.correo,
+            selecciones: reporteFinal
+        };
+
+        try {
+            await fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(payload)
+            });
+
+            document.getElementById('paso3').classList.add('hidden');
+            document.getElementById('mensajeFinal').classList.remove('hidden');
+            document.getElementById('textoDespedida').innerText = `Muchas gracias estimado profesor director de trabajo de grado, ${usuario.nombre}. Su horario ha sido reservado.`;
+        } catch (e) {
+            alert("Error al guardar.");
+            btn.disabled = false;
+        }
+    }
+</script>
+
+</body>
+</html>
