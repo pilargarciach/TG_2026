@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tejidos de Saber en la EEI · Fortalecimiento Investigativo</title>
+    <style>
+        :root {
+            --azul-marino: #0A2342;
+            --azul-profundo: #0D2B4E;
+            --azul-medio: #1B3A5C;
+            --azul-claro: #3A6B96;
+            --azul-suave: #A3C4D9;
+            --azul-hielo: #D6E4EF;
+            --blanco: #FFFFFF;
+            --blanco-roto: #F5F7FA;
+            --gris-perla: #E8ECF1;
+            --texto-oscuro: #1A1F26;
+            --texto-medio: #3A404A;
+            --texto-claro: #5A626A;
+            --borde-sutil: 1px solid rgba(10, 35, 66, 0.08);
+            --sombra-elevada: 0 8px 30px rgba(10, 35, 66, 0.1);
+            --sombra-media: 0 4px 16px rgba(10, 35, 66, 0.07);
+            --radio-borde: 4px;
+            --transicion: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --fuente-titulos: 'Georgia', 'Times New Roman', 'Noto Serif', serif;
+            --fuente-cuerpo: 'Georgia', 'Times New Roman', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--fuente-cuerpo);
+            background-color: var(--blanco-roto);
+            color: var(--texto-oscuro);
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ==================== HEADER ACADÉMICO ==================== */
+        .header-academico {
+            background-color: var(--azul-marino);
+            color: var(--blanco);
+            padding: 1.8rem 2rem 2.4rem;
+            border-bottom: 4px solid var(--azul-claro);
+            position: relative;
+            overflow: hidden;
+        }
+        .header-academico::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 320px;
+            height: 100%;
+            background: radial-gradient(circle at 70% 50%, rgba(163, 196, 217, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .header-contenido {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 1.5rem;
+        }
+        .titulo-principal {
+            font-family: var(--fuente-titulos);
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            line-height: 1.25;
+            margin-bottom: 0.25rem;
+        }
+        .subtitulo-principal {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            letter-spacing: 0.3px;
+        }
+        .badge-piloto {
+            display: inline-block;
+            background: var(--azul-claro);
+            color: #fff;
+            padding: 0.35rem 1.2rem;
+            border-radius: 2px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 0.8rem;
+        }
+        .lema-header {
+            font-family: var(--fuente-titulos);
+            font-size: 1rem;
+            color: var(--azul-suave);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* ==================== NAVEGACIÓN ==================== */
+        .nav-academica {
+            background: var(--blanco);
+            border-bottom: 1px solid var(--gris-perla);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 8px rgba(10, 35, 66, 0.04);
+        }
+        .nav-lista {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0 1rem;
+            gap: 0.2rem;
+        }
+        .nav-item {
+            padding: 0.9rem 1.1rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--azul-medio);
+            cursor: pointer;
+            transition: var(--transicion);
+            border-bottom: 2px solid transparent;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+        }
+        .nav-item:hover,
+        .nav-item.activo {
+            color: var(--azul-marino);
+            border-bottom-color: var(--azul-claro);
+            background: rgba(58, 107, 150, 0.03);
+        }
+
+        /* ==================== CONTENEDOR PRINCIPAL ==================== */
+        .contenido-principal {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+        }
+        @media (max-width: 900px) {
+            .contenido-principal {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ==================== SECCIONES ==================== */
+        .seccion {
+            background: var(--blanco);
+            border-radius: var(--radio-borde);
+            padding: 2rem 2rem 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--sombra-media);
+            border: var(--borde-sutil);
+            transition: var(--transicion);
+        }
+        .seccion h2 {
+            font-family: var(--fuente-titulos);
+            font-size: 1.55rem;
+            color: var(--azul-marino);
+            margin-bottom: 0.3rem;
+            border-bottom: 2px solid var(--azul-hielo);
+            padding-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .seccion h2 .icono {
+            font-size: 1.4rem;
+        }
+        .bajada {
+            color: var(--texto-medio);
+            font-size: 0.92rem;
+            margin-bottom: 1.6rem;
+            font-style: italic;
+            border-left: 3px solid var(--azul-claro);
+            padding-left: 1rem;
+        }
+
+        /* ==================== TARJETAS DE PRODUCTOS ==================== */
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .tarjeta-producto {
+            background: var(--blanco-roto);
+            border-left: 4px solid var(--azul-claro);
+            padding: 1.1rem 1.2rem;
+            border-radius: var(--radio-borde);
+            transition: var(--transicion);
+            border: 1px solid var(--gris-perla);
+        }
+        .tarjeta-producto:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--sombra-elevada);
+            border-left-color: var(--azul-marino);
+        }
+        .tarjeta-producto .tipo-producto {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--azul-claro);
+            font-weight: 700;
+        }
+        .tarjeta-producto h4 {
+            font-family: var(--fuente-titulos);
+            color: var(--azul-marino);
+            margin: 0.3rem 0 0.4rem;
+            font-size: 1rem;
+        }
+        .tarjeta-producto .meta {
+            font-size: 0.78rem;
+            color: var(--texto-claro);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ==================== CALENDARIO ==================== */
+        .calendario-widget {
+            background: var(--blanco);
+            border-radius: var(--radio-borde);
+            padding: 1.2rem;
+            border: var(--borde-sutil);
+            box-shadow: var(--sombra-media);
+        }
+        .calendario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--azul-marino);
+        }
+        .calendario-dias {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.15rem;
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--texto-medio);
+        }
+        .calendario-dia {
+            padding: 0.35rem;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: var(--transicion);
+        }
+        .calendario-dia:hover {
+            background: var(--azul-hielo);
+            color: var(--azul-marino);
+        }
+        .calendario-dia.evento {
+            background: var(--azul-claro);
+            color: #fff;
+            font-weight: 600;
+        }
+        .calendario-dia.hoy {
+            border: 2px solid var(--azul-marino);
+            font-weight: 700;
+        }
+        .eventos-lista {
+            margin-top: 1rem;
+            font-size: 0.82rem;
+            color: var(--texto-medio);
+            max-height: 160px;
+            overflow-y: auto;
+        }
+        .evento-item {
+            padding: 0.35rem 0;
+            border-bottom: 1px dashed var(--gris-perla);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .evento-fecha {
+            font-weight: 700;
+            color: var(--azul-claro);
+            min-width: 2.2rem;
+        }
+
+        /* ==================== NOTICIAS ==================== */
+        .tarjeta-noticia {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gris-perla);
+            transition: var(--transicion);
+        }
+        .tarjeta-noticia:hover {
+            background: var(--blanco-roto);
+            padding-left: 0.5rem;
+        }
+        .noticia-fecha {
+            font-size: 0.75rem;
+            color: var(--azul-claro);
+            font-weight: 700;
+            min-width: 3.5rem;
+            text-transform: uppercase;
+        }
+        .noticia-titulo {
+            font-weight: 600;
+            color: var(--azul-marino);
+        }
+
+        /* ==================== SISTEMA DE COMENTARIOS ==================== */
+        .comentarios-contenedor {
+            margin-top: 1.2rem;
+        }
+        .comentario-form {
+            display: flex;
+            gap: 0.6rem;
+            margin-bottom: 1.4rem;
+        }
+        .comentario-input {
+            flex: 1;
+            padding: 0.7rem 0.9rem;
+            border: 1px solid var(--gris-perla);
+            border-radius: var(--radio-borde);
+            font-family: var(--fuente-cuerpo);
+            background: var(--blanco-roto);
+            transition: var(--transicion);
+        }
+        .comentario-input:focus {
+            outline: none;
+            border-color: var(--azul-claro);
+            box-shadow: 0 0 0 3px rgba(58, 107, 150, 0.08);
+        }
+        .btn-enviar {
+            background: var(--azul-marino);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.4rem;
+            border-radius: var(--radio-borde);
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: var(--transicion);
+        }
+        .btn-enviar:hover {
+            background: var(--azul-claro);
+        }
+        .comentario-item {
+            background: var(--blanco-roto);
+            padding: 0.7rem 1rem;
+            border-radius: var(--radio-borde);
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--azul-claro);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .comentario-eliminar {
+            background: none;
+            border: none;
+            color: var(--texto-claro);
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        /* ==================== ENCUESTA DE INTERESES ==================== */
+        .encuesta-opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .opcion-encuesta {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 0.8rem;
+            background: var(--blanco-roto);
+            border-radius: var(--radio-borde);
+            cursor: pointer;
+            transition: var(--transicion);
+        }
+        .opcion-encuesta:hover {
+            background: var(--azul-hielo);
+        }
+        .barra-votos {
+            height: 6px;
+            background: var(--gris-perla);
+            border-radius: 4px;
+            margin-top: 0.3rem;
+            overflow: hidden;
+        }
+        .barra-progreso {
+            height: 100%;
+            background: var(--azul-claro);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+
+        /* ==================== SIDEBAR ==================== */
+        .sidebar-item {
+            background: var(--blanco);
+            border-radius: var(--radio-borde);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: var(--borde-sutil);
+            box-shadow: var(--sombra-media);
+        }
+        .sidebar-item h3 {
+            font-family: var(--fuente-titulos);
+            color: var(--azul-marino);
+            font-size: 1rem;
+            margin-bottom: 0.7rem;
+            border-bottom: 1px solid var(--azul-hielo);
+            padding-bottom: 0.4rem;
+        }
+        .enlace-formulario {
+            display: block;
+            background: var(--azul-marino);
+            color: #fff;
+            text-align: center;
+            padding: 0.6rem;
+            border-radius: var(--radio-borde);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            transition: var(--transicion);
+        }
+        .enlace-formulario:hover {
+            background: var(--azul-claro);
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer-academico {
+            background: var(--azul-marino);
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 1.8rem;
+            font-size: 0.85rem;
+            margin-top: auto;
+            letter-spacing: 0.2px;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .nav-lista {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            .header-contenido {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .contenido-principal {
+                padding: 0 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="header-academico">
+        <div class="header-contenido">
+            <div>
+                <p style="font-size:0.8rem; letter-spacing:1px; text-transform:uppercase; color:var(--azul-suave);">Escuela de Educación · Politécnico Grancolombiano</p>
+                <h1 class="titulo-principal">Tejidos de Saber en la EEI</h1>
+                <p class="subtitulo-principal">Programa de mentoría e intercambio investigativo para fortalecer capacidades instaladas</p>
+                <div class="lema-header">«Porque el conocimiento se construye en comunidad, hilo a hilo»</div>
+                <span class="badge-piloto">🔬 Piloto → Estrategia Permanente</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== NAVEGACIÓN STICKY ==================== -->
+    <nav class="nav-academica" id="navPrincipal">
+        <ul class="nav-lista">
+            <li class="nav-item activo" data-seccion="inicio">📋 Inicio</li>
+            <li class="nav-item" data-seccion="agenda">📚 Agenda Investigativa</li>
+            <li class="nav-item" data-seccion="calendario">📅 Calendario</li>
+            <li class="nav-item" data-seccion="noticias">📰 Noticias</li>
+            <li class="nav-item" data-seccion="comentarios">💬 Comentarios</li>
+            <li class="nav-item" data-seccion="encuesta">📊 Intereses</li>
+        </ul>
+    </nav>
+
+    <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+    <div class="contenido-principal">
+
+        <!-- COLUMNA PRINCIPAL -->
+        <div id="columnaPrincipal">
+
+            <!-- Sección INICIO (visible por defecto) -->
+            <section class="seccion" id="seccion-inicio">
+                <h2><span class="icono">🎯</span> Objetivos de la Estrategia</h2>
+                <p class="bajada">Horizontes que guían este tejido colectivo de investigación</p>
+                <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.8rem;">
+                    <li style="display:flex; align-items:flex-start; gap:0.7rem;">
+                        <span style="color:var(--azul-claro); font-weight:bold;">▹</span>
+                        <span><strong>Fortalecer las capacidades investigativas instaladas</strong> mediante intercambios horizontales entre pares.</span>
+                    </li>
+                    <li style="display:flex; align-items:flex-start; gap:0.7rem;">
+                        <span style="color:var(--azul-claro); font-weight:bold;">▹</span>
+                        <span><strong>Crear evidencia documentada de cultura investigativa</strong> para acreditación y registro calificado.</span>
+                    </li>
+                    <li style="display:flex; align-items:flex-start; gap:0.7rem;">
+                        <span style="color:var(--azul-claro); font-weight:bold;">▹</span>
+                        <span><strong>Generar un espacio sostenible, propio de la escuela</strong>, que no dependa de una sola persona.</span>
+                    </li>
+                    <li style="display:flex; align-items:flex-start; gap:0.7rem;">
+                        <span style="color:var(--azul-claro); font-weight:bold;">▹</span>
+                        <span><strong>Vincular progresivamente a estudiantes de posgrado</strong> como participantes y luego ponentes.</span>
+                    </li>
+                </ul>
+
+                <h2 style="margin-top:2rem;"><span class="icono">🧩</span> Modalidades</h2>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1rem; margin-top:1rem;">
+                    <div style="background:var(--blanco-roto); padding:1rem; border-radius:var(--radio-borde); border-left:4px solid var(--azul-claro);">
+                        <strong>🎤 Coloquios quincenales</strong><br><small style="color:var(--texto-medio);">Profes comparten procesos reales: dudas, métodos, hallazgos.</small>
+                    </div>
+                    <div style="background:var(--blanco-roto); padding:1rem; border-radius:var(--radio-borde); border-left:4px solid var(--azul-claro);">
+                        <strong>🛠️ Talleres metodológicos</strong><br><small style="color:var(--texto-medio);">Del dato al relato, diseños óptimos, manejo de datos.</small>
+                    </div>
+                    <div style="background:var(--blanco-roto); padding:1rem; border-radius:var(--radio-borde); border-left:4px solid var(--azul-claro);">
+                        <strong>🤝 Mentorías entre pares</strong><br><small style="color:var(--texto-medio);">Duplas experto + novel con seguimiento mensual.</small>
+                    </div>
+                    <div style="background:var(--blanco-roto); padding:1rem; border-radius:var(--radio-borde); border-left:4px solid var(--azul-claro);">
+                        <strong>🏥 Clínicas de proyectos</strong><br><small style="color:var(--texto-medio);">Revisión de trabajos de grado y propuestas en construcción.</small>
+                    </div>
+                </div>
+
+                <h2 style="margin-top:2rem;"><span class="icono">📊</span> Métricas del Piloto</h2>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap:1rem; margin-top:1rem; text-align:center;">
+                    <div style="background:var(--azul-marino); color:#fff; padding:1.2rem; border-radius:var(--radio-borde);">
+                        <span style="font-size:2rem; font-weight:700;" data-meta="8">8</span><br>sesiones mínimas
+                    </div>
+                    <div style="background:var(--azul-marino); color:#fff; padding:1.2rem; border-radius:var(--radio-borde);">
+                        <span style="font-size:2rem; font-weight:700;" data-meta="6">6</span><br>profes ponentes
+                    </div>
+                    <div style="background:var(--azul-marino); color:#fff; padding:1.2rem; border-radius:var(--radio-borde);">
+                        <span style="font-size:2rem; font-weight:700;" data-meta="3">3</span><br>duplas mentoría
+                    </div>
+                    <div style="background:var(--azul-marino); color:#fff; padding:1.2rem; border-radius:var(--radio-borde);">
+                        <span style="font-size:2rem; font-weight:700;" data-meta="1">1</span><br>informe acreditación
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección AGENDA INVESTIGATIVA (productos reales del grupo) -->
+            <section class="seccion" id="seccion-agenda" style="display:none;">
+                <h2><span class="icono">📚</span> Agenda Investigativa · Productos del Grupo</h2>
+                <p class="bajada">Temas y métodos derivados de la producción real del grupo «Educación, Innovación y Sociedad» — Clasificación B MinCiencias</p>
+                <p style="font-size:0.85rem; color:var(--texto-medio); margin-bottom:1rem;">
+                    <strong>Líneas activas:</strong> Educación STEM, pensamiento científico, innovación educativa, comunicación y cultura, educación inicial e infancias, ciencias sociales, iniciación científica.
+                </p>
+                <div class="grid-productos" id="gridProductos">
+                    <!-- Se llenan dinámicamente con JS -->
+                </div>
+                <p style="margin-top:1rem; font-size:0.8rem; color:var(--texto-claro);">
+                    📎 Datos extraídos de <a href="https://scienti.minciencias.gov.co/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000020215" target="_blank" style="color:var(--azul-claro);">GrupLAC MinCiencias</a>. Esta agenda se actualizará semestralmente.
+                </p>
+            </section>
+
+            <!-- Sección CALENDARIO -->
+            <section class="seccion" id="seccion-calendario" style="display:none;">
+                <h2><span class="icono">📅</span> Programación del Semestre</h2>
+                <p class="bajada">Coloquios, talleres y clínicas · Agosto – Diciembre 2026</p>
+                <div id="calendarioDinamico"></div>
+            </section>
+
+            <!-- Sección NOTICIAS -->
+            <section class="seccion" id="seccion-noticias" style="display:none;">
+                <h2><span class="icono">📰</span> Noticias y Novedades</h2>
+                <div id="listaNoticias"></div>
+            </section>
+
+            <!-- Sección COMENTARIOS -->
+            <section class="seccion" id="seccion-comentarios" style="display:none;">
+                <h2><span class="icono">💬</span> Comentarios y Propuestas</h2>
+                <p class="bajada">Deja tus ideas, temas que te interesan o sugerencias para el programa</p>
+                <div class="comentarios-contenedor">
+                    <div class="comentario-form">
+                        <input type="text" id="inputComentario" class="comentario-input" placeholder="Escribe tu comentario o tema de interés...">
+                        <button class="btn-enviar" id="btnComentar">Enviar</button>
+                    </div>
+                    <div id="listaComentarios"></div>
+                </div>
+            </section>
+
+            <!-- Sección ENCUESTA DE INTERESES -->
+            <section class="seccion" id="seccion-encuesta" style="display:none;">
+                <h2><span class="icono">📊</span> ¿Qué temas te interesa aprender?</h2>
+                <p class="bajada">Vota por los temas que más te gustaría que abordáramos en los talleres</p>
+                <div class="encuesta-opciones" id="encuestaOpciones"></div>
+            </section>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside>
+            <div class="sidebar-item">
+                <h3>📝 Formulario de Asistencia</h3>
+                <p style="font-size:0.82rem; color:var(--texto-medio);">Registra tu participación en las sesiones (enlace Google Forms).</p>
+                <a href="https://docs.google.com/forms/d/e/TU_ID_FORMULARIO_AQUI/viewform" target="_blank" class="enlace-formulario" id="enlaceAsistencia">📋 Ir al formulario</a>
+                <p style="font-size:0.7rem; color:var(--texto-claro); margin-top:0.5rem;">🔗 Reemplaza este enlace con tu formulario real.</p>
+            </div>
+            <div class="sidebar-item">
+                <h3>👥 Grupo de Investigación</h3>
+                <p style="font-size:0.82rem; color:var(--texto-medio);"><strong>Educación, Innovación y Sociedad</strong><br>Clasificación B · MinCiencias<br>47 integrantes activos<br>10 líneas de investigación</p>
+                <a href="https://scienti.minciencias.gov.co/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000020215" target="_blank" style="color:var(--azul-claro); font-size:0.82rem;">Ver GrupLAC →</a>
+            </div>
+            <div class="sidebar-item">
+                <h3>🔗 Enlaces rápidos</h3>
+                <ul style="list-style:none; padding:0; font-size:0.82rem; display:flex; flex-direction:column; gap:0.4rem;">
+                    <li><a href="#" style="color:var(--azul-claro);">📄 Repositorio interno</a></li>
+                    <li><a href="#" style="color:var(--azul-claro);">🎥 Grabaciones de coloquios</a></li>
+                    <li><a href="#" style="color:var(--azul-claro);">📊 Informe de cierre (próximamente)</a></li>
+                </ul>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer-academico">
+        <p><strong>Tejidos de Saber en la EEI</strong> · Escuela de Educación · Institución Universitaria Politécnico Grancolombiano</p>
+        <p style="margin-top:0.3rem;">© 2026 · Programa de Fortalecimiento de Capacidades Instaladas de Investigación</p>
+    </footer>
+
+    <script>
+        (function() {
+            // ==================== 1. NAVEGACIÓN ENTRE SECCIONES ====================
+            const navItems = document.querySelectorAll('.nav-item');
+            const secciones = {
+                inicio: document.getElementById('seccion-inicio'),
+                agenda: document.getElementById('seccion-agenda'),
+                calendario: document.getElementById('seccion-calendario'),
+                noticias: document.getElementById('seccion-noticias'),
+                comentarios: document.getElementById('seccion-comentarios'),
+                encuesta: document.getElementById('seccion-encuesta')
+            };
+
+            function mostrarSeccion(nombre) {
+                Object.values(secciones).forEach(sec => sec.style.display = 'none');
+                if (secciones[nombre]) secciones[nombre].style.display = 'block';
+                navItems.forEach(item => item.classList.remove('activo'));
+                const activo = document.querySelector(`.nav-item[data-seccion="${nombre}"]`);
+                if (activo) activo.classList.add('activo');
+                // Disparar eventos especiales al cambiar de sección
+                if (nombre === 'calendario') generarCalendario();
+                if (nombre === 'noticias') cargarNoticias();
+                if (nombre === 'comentarios') cargarComentarios();
+                if (nombre === 'encuesta') cargarEncuesta();
+                if (nombre === 'agenda') cargarAgenda();
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const seccion = item.getAttribute('data-seccion');
+                    mostrarSeccion(seccion);
+                });
+            });
+
+            // ==================== 2. AGENDA INVESTIGATIVA (productos reales del grupo) ====================
+            function cargarAgenda() {
+                const grid = document.getElementById('gridProductos');
+                if (grid.children.length > 0) return; // ya cargada
+
+                const productos = [
+                    { tipo: 'Artículo', titulo: 'Engineering Education with a Research-based Approach: Nature-Inspired Product Design',
+                        revista: 'IEEE EDUCON 2024', autor: 'María del Pilar García Chitiva', metodo: 'Aprendizaje Basado en Investigación' },
+                    { tipo: 'Artículo', titulo: 'La arremetida neoliberal contra los trabajadores de Telecom (1947-2003)',
+                        revista: 'Cambios y Permanencias 2024', autor: 'Juan Pablo Díaz Rodríguez', metodo: 'Análisis histórico-documental' },
+                    { tipo: 'Artículo', titulo: 'Is eco-social education for trainee teachers possible using international mirror classes on landscape?',
+                        revista: 'IRGEE 2024', autor: 'Doris Lised García Ortiz', metodo: 'Investigación-acción / Clases espejo' },
+                    { tipo: 'Artículo', titulo: 'Entorno socioeconómico y resiliencia académica en la educación superior colombiana',
+                        revista: 'RIES 2024', autor: 'Nicolás Arias Velandia et al.', metodo: 'Análisis cuantitativo / Modelos multinivel' },
+                    { tipo: 'Ponencia', titulo: 'WIP: Implementing and Deploying Artificial Intelligence Solutions in Higher Education',
+                        revista: 'FIE 2024', autor: 'María del Pilar García Chitiva', metodo: 'Diseño tecnológico / Estudio de caso' },
+                    { tipo: 'Artículo', titulo: 'La deserción universitaria en América Latina: una perspectiva ecológica',
+                        revista: 'Estudios Pedagógicos 2023', autor: 'Nicolás Arias Velandia et al.', metodo: 'Revisión sistemática / Modelo ecológico' },
+                    { tipo: 'Artículo', titulo: 'TBL, Self-assessment, and Use of ICT: A Methodological Option to Benefit the English Learning Process',
+                        revista: 'JLTR 2019', autor: 'Rodríguez, Ramírez, Camargo', metodo: 'Aprendizaje Basado en Tareas (TBL)' },
+                    { tipo: 'Artículo', titulo: 'Estado de la investigación sobre la colaboración en Entornos Virtuales de Aprendizaje',
+                        revista: 'Pixel-Bit 2019', autor: 'María del Pilar García Chitiva', metodo: 'Revisión de literatura / Mapeo sistemático' }
+                ];
+
+                grid.innerHTML = productos.map(p => `
+                    <div class="tarjeta-producto">
+                        <span class="tipo-producto">${p.tipo}</span>
+                        <h4>${p.titulo}</h4>
+                        <div class="meta">
+                            <span>📖 ${p.revista}</span>
+                            <span>✍️ ${p.autor}</span>
+                        </div>
+                        <div style="margin-top:0.4rem; font-size:0.78rem; color:var(--azul-claro); font-weight:600;">
+                            🔬 Método: ${p.metodo}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // ==================== 3. CALENDARIO DINÁMICO ====================
+            function generarCalendario() {
+                const contenedor = document.getElementById('calendarioDinamico');
+                if (contenedor.children.length > 0) return;
+
+                const hoy = new Date();
+                const mes = hoy.getMonth();
+                const año = hoy.getFullYear();
+                const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+                    'Noviembre', 'Diciembre'
+                ];
+                const diasSemana = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
+                // Eventos del piloto (fechas ejemplo)
+                const eventos = {
+                    '2026-08-15': 'Sesión inaugural · Coloquio 1',
+                    '2026-08-29': 'Coloquio 2 · Prof. García',
+                    '2026-09-12': 'Taller: Del dato al relato',
+                    '2026-09-26': 'Clínica de proyectos (posgrado)',
+                    '2026-10-10': 'Coloquio 3 · Prof. Díaz',
+                    '2026-10-24': 'Taller: Diseños de investigación',
+                    '2026-11-07': 'Coloquio 4 · Prof. Arias',
+                    '2026-11-21': 'Sesión de cierre · Mini-encuentro'
+                };
+
+                let html = `<div class="calendario-widget">
+                    <div class="calendario-header">
+                        <span>${meses[mes]} ${año}</span>
+                        <span style="font-size:0.8rem; color:var(--texto-claro);">📌 8 sesiones programadas</span>
+                    </div>
+                    <div class="calendario-dias">`;
+                diasSemana.forEach(d => html += `<div style="font-weight:700; color:var(--azul-marino);">${d}</div>`);
+
+                const primerDia = new Date(año, mes, 1).getDay();
+                const diasEnMes = new Date(año, mes + 1, 0).getDate();
+
+                for (let i = 0; i < primerDia; i++) html += '<div></div>';
+                for (let dia = 1; dia <= diasEnMes; dia++) {
+                    const fechaStr = `${año}-${String(mes+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+                    let clase = 'calendario-dia';
+                    if (eventos[fechaStr]) clase += ' evento';
+                    if (dia === hoy.getDate() && mes === hoy.getMonth() && año === hoy.getFullYear()) clase +=
+                        ' hoy';
+                    html +=
+                        `<div class="${clase}" title="${eventos[fechaStr] || ''}">${dia}</div>`;
+                }
+                html += `</div>
+                    <div class="eventos-lista">
+                        <strong style="color:var(--azul-marino);">Próximas sesiones:</strong>
+                        ${Object.entries(eventos).map(([fecha, texto]) => {
+                            const d = new Date(fecha + 'T00:00:00');
+                            if (d >= new Date()) return `<div class="evento-item"><span class="evento-fecha">${d.getDate()}/${d.getMonth()+1}</span><span>${texto}</span></div>`;
+                            return '';
+                        }).join('')}
+                    </div>
+                </div>`;
+                contenedor.innerHTML = html;
+            }
+
+            // ==================== 4. NOTICIAS ====================
+            function cargarNoticias() {
+                const contenedor = document.getElementById('listaNoticias');
+                if (contenedor.children.length > 0) return;
+                const noticias = [
+                    { fecha: 'AGO 2026',
+                        titulo: 'Lanzamiento oficial del programa Tejidos de Saber',
+                        resumen: 'Sesión inaugural con la participación de 15 profesores investigadores.' },
+                    { fecha: 'SEP 2026',
+                        titulo: 'Primer taller metodológico: "Del dato al relato"',
+                    resumen: 'Abierto a estudiantes de posgrado. Se explicará cómo transformar datos en narrativas académicas.' },
+                    { fecha: 'OCT 2026',
+                        titulo: 'Clínica de proyectos: 5 trabajos de grado revisados',
+                        resumen: 'Estudiantes de maestría presentaron sus avances y recibieron retroalimentación.' },
+                    { fecha: 'NOV 2026',
+                        titulo: 'Cierre del piloto: 8 sesiones, 12 ponentes, 3 duplas de mentoría',
+                        resumen: 'Se entregará informe a decanatura para institucionalización.' }
+                ];
+                contenedor.innerHTML = noticias.map(n => `
+                    <div class="tarjeta-noticia">
+                        <span class="noticia-fecha">${n.fecha}</span>
+                        <div>
+                            <div class="noticia-titulo">${n.titulo}</div>
+                            <div style="font-size:0.82rem; color:var(--texto-medio);">${n.resumen}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // ==================== 5. SISTEMA DE COMENTARIOS (localStorage) ====================
+            function cargarComentarios() {
+                const lista = document.getElementById('listaComentarios');
+                const comentarios = JSON.parse(localStorage.getItem('comentarios_tejidos') || '[]');
+                lista.innerHTML = comentarios.map((c, i) => `
+                    <div class="comentario-item">
+                        <span>${c.texto}</span>
+                        <button class="comentario-eliminar" data-index="${i}">✕</button>
+                    </div>
+                `).join('');
+                // Eventos de eliminar
+                lista.querySelectorAll('.comentario-eliminar').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.getAttribute('data-index'));
+                        let coms = JSON.parse(localStorage.getItem(
+                            'comentarios_tejidos') || '[]');
+                        coms.splice(idx, 1);
+                        localStorage.setItem('comentarios_tejidos', JSON.stringify(coms));
+                        cargarComentarios();
+                    });
+                });
+            }
+
+            document.getElementById('btnComentar').addEventListener('click', function() {
+                const input = document.getElementById('inputComentario');
+                const texto = input.value.trim();
+                if (!texto) return;
+                let coms = JSON.parse(localStorage.getItem('comentarios_tejidos') || '[]');
+                coms.push({ texto, fecha: new Date().toISOString() });
+                localStorage.setItem('comentarios_tejidos', JSON.stringify(coms));
+                input.value = '';
+                cargarComentarios();
+            });
+
+            // ==================== 6. ENCUESTA DE INTERESES (votación) ====================
+            function cargarEncuesta() {
+                const contenedor = document.getElementById('encuestaOpciones');
+                if (contenedor.children.length > 0) return;
+                const temas = [
+                    '📊 Análisis de datos cualitativos',
+                    '📈 Métodos cuantitativos y modelos multinivel',
+                    '🤖 IA aplicada a la educación',
+                    '📝 Escritura académica y publicación',
+                    '🌍 Investigación-acción en territorios',
+                    '👶 Educación inicial e infancias',
+                    '🔬 STEM y pensamiento científico',
+                    '💻 Educación virtual y TIC'
+                ];
+                const votos = JSON.parse(localStorage.getItem('votos_encuesta_tejidos') || '{}');
+                const totalVotos = Object.values(votos).reduce((a, b) => a + b, 0) || 1;
+
+                contenedor.innerHTML = temas.map((tema, i) => {
+                    const v = votos[tema] || 0;
+                    const pct = Math.round((v / totalVotos) * 100);
+                    return `
+                        <div class="opcion-encuesta" data-tema="${tema}">
+                            <span style="flex:1;">${tema}</span>
+                            <span style="font-weight:700; color:var(--azul-claro);">${v} voto(s)</span>
+                            <div class="barra-votos" style="flex:0 0 100%;"><div class="barra-progreso" style="width:${pct}%;"></div></div>
+                        </div>`;
+                }).join('');
+
+                contenedor.querySelectorAll('.opcion-encuesta').forEach(op => {
+                    op.addEventListener('click', function() {
+                        const tema = this.getAttribute('data-tema');
+                        let votos = JSON.parse(localStorage.getItem(
+                            'votos_encuesta_tejidos') || '{}');
+                        votos[tema] = (votos[tema] || 0) + 1;
+                        localStorage.setItem('votos_encuesta_tejidos', JSON.stringify(
+                            votos));
+                        cargarEncuesta();
+                    });
+                });
+            }
+
+            // ==================== 7. INICIALIZACIÓN ====================
+            mostrarSeccion('inicio');
+
+            // ==================== 8. ENLACE DE FORMULARIO CONFIGURABLE ====================
+            // Cambia esta URL por la de tu Google Form real
+            const URL_FORMULARIO_ASISTENCIA =
+                'https://docs.google.com/forms/d/e/TU_ID_FORMULARIO_AQUI/viewform';
+            document.getElementById('enlaceAsistencia').setAttribute('href', URL_FORMULARIO_ASISTENCIA);
+
+            console.log('🧶 Tejidos de Saber en la EEI — Plataforma académica lista.');
+            console.log('📌 Para GitHub: simplemente sube este archivo como index.html a tu repositorio.');
+            console.log('🔗 Recuerda reemplazar TU_ID_FORMULARIO_AQUI con el ID real de tu Google Form.');
+        })();
+    </script>
+</body>
+</html>
