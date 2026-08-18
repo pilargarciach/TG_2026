@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sustentaciones MIE – [GRUPO L01 y L02]</title>
+    <title>Evaluación de Sustentaciones MIE</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; }
         .box { max-width: 750px; background: white; margin: auto; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
@@ -11,33 +11,32 @@
         .info { font-size: 0.85rem; color: #555; margin-top: 5px; }
         .hidden { display: none; }
         button { width: 100%; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; }
-        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .mensaje-inicial { background: #e8f6ef; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.95rem; color: #2c3e50; }
     </style>
 </head>
 <body>
 
 <div class="box">
-    <h2>Selección de horario TRABAJO DE GRADO MIE – [GRUPO L01 y L02]</h2>
-    <p style="text-align:center; font-weight:bold;">Tutora Dra. María del Pilar García Chitiva</p>
+    <h2>Evaluación de Trabajos de Grado MIE – [GRUPO L01 y L02]</h2>
     
     <div id="paso1">
-        <label>Su nombre (Director):</label>
+        <div class="mensaje-inicial">
+            <p><strong>¡Cordial saludo, estimado profesor!</strong></p>
+            <p>En este momento importante de la etapa final de los trabajos de grado, es muy valioso para nuestro grupo de estudiantes contar con la retroalimentación de un profesor experto. Por ello, al ser usted director de un trabajo de grado, será de mucha ayuda contar con su apoyo como <strong>evaluador</strong> en los proyectos que desee seleccionar en cualquiera de las dos fechas programadas.</p>
+            <p>Agradecemos profundamente su apoyo y compromiso en este proceso formativo.</p>
+        </div>
+        <label>Su nombre:</label>
         <input type="text" id="nombreProf" placeholder="Nombre completo">
-        <label>Su correo:</label>
+        <label>Su correo electrónico:</label>
         <input type="email" id="correoProf" placeholder="usuario@correo.com">
-        <button onclick="irAPaso2()">Ingresar</button>
+        <button onclick="irAPaso2()">Continuar con la selección</button>
     </div>
 
     <div id="paso2" class="hidden">
-        <p>Seleccione los proyectos que usted dirige/asesora:</p>
+        <p>Seleccione todos los proyectos en los que desea participar como <strong>evaluador</strong>:</p>
         <div id="lista"></div>
-        <button onclick="irAPaso3()" style="background:#2c3e50;">Continuar a Horarios</button>
-    </div>
-
-    <div id="paso3" class="hidden">
-        <p id="msgCupos">Cargando disponibilidad...</p>
-        <div id="fechas"></div>
-        <button id="btnFinal" onclick="enviar()">Finalizar Registro</button>
+        <button id="btnFinal" onclick="enviar()" style="background:#27ae60;">Enviar selección de evaluación</button>
     </div>
 
     <div id="final" class="hidden" style="text-align:center;">
@@ -50,8 +49,7 @@
     const URL_GAS = "https://script.google.com/macros/s/AKfycbzdjbKmNQ8l8iDxsnqQ-Dpc-7IZfZWYMsPZCAFsRpdemIPfhczSil74VDnnPcDYHlsQFw/exec";
 
     const datos = [
-        // 18 de agosto
-        { e: "Ana Carolina Pájaro Polo", t: "Estrategias innovadoras para el uso responsable de dispositivos tecnológicos...", d: "David Guillermo Barros Becerra", f: "18 de agosto" },
+        { e: "Ana Carolina Pájaro Polo, María Aleyda Waldo Mosquera ", t: "Estrategias innovadoras para el uso responsable de dispositivos tecnológicos...", d: "David Guillermo Barros Becerra", f: "18 de agosto" },
         { e: "Brayan Fernando Enríquez Tulcán, Juan Sebastián Gómez Naspirán", t: "Estudio de caso sobre la implementación de simuladores química...", d: "Marleny Yojana Marín Morales", f: "18 de agosto" },
         { e: "Cesar Augusto Alzate Victoria, Sharith Dayana Velásquez Pineda", t: "Transformando los recreos escolares en espacios de aprendizaje matemático...", d: "Lizeth Paola Pertuz Altamiranda", f: "18 de agosto" },
         { e: "Cristina López Coronado, Diego Armando Velásquez Álvarez", t: "Estrategias de innovación pedagógica para fortalecer la inclusión...", d: "Álvaro José Tórres", f: "18 de agosto" },
@@ -60,21 +58,19 @@
         { e: "Gloria Angelica Orrego Cardona, Marco Fidel Mosquera Quinto", t: "Estudio de caso sobre los factores asociados a la deserción escolar...", d: "Jimena Marcela Perdomo", f: "18 de agosto" },
         { e: "Jefferson Cepeda Tarifa", t: "Fortalecimiento del pensamiento computacional en estudiantes indígenas...", d: "Deisy Lorena Gonzalez", f: "18 de agosto" },
         { e: "Jennifer Paola Ballestas Mendoza, Stephanie Vanessa Molina Rayo, Heydy Bibiana Mariño Rodríguez", t: "Arte y emociones para sanar...", d: "Katherine Franco", f: "18 de agosto" },
-        // 19 de agosto
         { e: "John Andreus Forero Cardona, Oscar Mauricio Santos Martínez", t: "Desarrollo del pensamiento creativo desde el cuerpo...", d: "Deisy Lorena Gonzalez", f: "19 de agosto" },
         { e: "John Fredy López Ochoa, María Isabel Villada Gil", t: "Saberes territoriales y educación crítica en las narrativas...", d: "María Isabel Villada Gil", f: "19 de agosto" },
         { e: "Lina Marcela Posso Hernández", t: "Diseño de una estrategia pedagógica basada en simulación clínica...", d: "Yenny Milena Mendoza Guzmán", f: "19 de agosto" },
         { e: "Luz Mirian Chicangana Rengifo, Lenin Jamitt Paz Narváez, Yovanny Delgado Delgado", t: "Proyección de las prácticas pedagógicas interculturales...", d: "Tinalyd Andrea Bolaños Gallardo", f: "19 de agosto" },
         { e: "Martha Constanza Casallas Herrera, Yalid Angélica López Riaño", t: "Exploración del alfabetismo emergente en la educación inicial...", d: "Cindy Julieth Martínez Ruiz", f: "19 de agosto" },
-        { e: "Nency María Nieves Noriega, Edilson Pacheco Navarro, Dionel Alirio García Bayona", t: "Estrategias Didácticas y Metodológicas: Un Reto para la Enseñanza de las Ciencias Sociales...", d: "Claudia Milena Ruiz Cepeda", f: "19 de agosto" },
+        { e: "Nency María Nieves Noriega, Edilson Pacheco Navarro, Dionel Alirio García Bayona", t: "Estrategias Didácticas y Metodológicas...", d: "Claudia Milena Ruiz Cepeda", f: "19 de agosto" },
         { e: "Viviana Farley Barrera Rueda", t: "La Escritura Reflexiva como Estrategia Didáctica...", d: "Mónica Adelaida Lovera", f: "19 de agosto" },
         { e: "Wendy Estefania Barrero Campos", t: "Aprendizajes socioemocionales del deporte del porrismo...", d: "Cristian Gustavo Gutierrez Pinzón", f: "19 de agosto" }
     ];
 
-    let seleccionados = [];
-
     function irAPaso2() {
-        if(!document.getElementById('nombreProf').value) return alert("Por favor ingrese su nombre");
+        if(!document.getElementById('nombreProf').value || !document.getElementById('correoProf').value) return alert("Por favor complete su nombre y correo");
+        
         const listDiv = document.getElementById('lista');
         listDiv.innerHTML = "";
         datos.forEach((p, i) => {
@@ -82,45 +78,22 @@
                 <div class="proyecto">
                     <input type="checkbox" value="${i}" class="chk"> <b>${p.t}</b>
                     <div class="info"><b>Estudiantes:</b> ${p.e}</div>
-                    <div class="info"><b>Director:</b> ${p.d} | <b>Día:</b> ${p.f}</div>
+                    <div class="info"><b>Director:</b> ${p.d} | <b>Fecha:</b> ${p.f}</div>
                 </div>`;
         });
         document.getElementById('paso1').classList.add('hidden');
         document.getElementById('paso2').classList.remove('hidden');
     }
 
-    async function irAPaso3() {
-        const checks = document.querySelectorAll('.chk:checked');
-        if(checks.length === 0) return alert("Seleccione al menos un proyecto");
-        seleccionados = Array.from(checks).map(c => datos[c.value]);
-        
-        document.getElementById('paso2').classList.add('hidden');
-        document.getElementById('paso3').classList.remove('hidden');
-        document.getElementById('msgCupos').innerText = "Confirme la fecha de su proyecto:";
-        
-        document.getElementById('fechas').innerHTML = "";
-        seleccionados.forEach((p, i) => {
-            document.getElementById('fechas').innerHTML += `
-                <div class="proyecto">
-                    <b>${p.t}</b>
-                    <div class="info">Estudiantes: ${p.e}</div>
-                    <p><b>Fecha asignada:</b> ${p.f}</p>
-                    <input type="hidden" class="fsel" value="${p.f}">
-                </div>`;
-        });
-    }
-
     async function enviar() {
+        const checks = document.querySelectorAll('.chk:checked');
+        if(checks.length === 0) return alert("Seleccione al menos un proyecto para evaluar");
+        
         const btn = document.getElementById('btnFinal');
         btn.disabled = true;
-        btn.innerText = "Guardando...";
+        btn.innerText = "Enviando...";
 
-        const payloadProyectos = seleccionados.map((p) => ({
-            titulo: p.t,
-            estudiantes: p.e,
-            director: p.d,
-            fecha: p.f
-        }));
+        const seleccionados = Array.from(checks).map(c => datos[c.value]);
 
         await fetch(URL_GAS, {
             method: 'POST',
@@ -128,12 +101,12 @@
             body: JSON.stringify({
                 nombre: document.getElementById('nombreProf').value,
                 correo: document.getElementById('correoProf').value,
-                proyectos: payloadProyectos
+                evaluaciones: seleccionados
             })
         });
 
-        document.getElementById('despedida').innerText = `Muchas gracias, ${document.getElementById('nombreProf').value}. Sus proyectos han sido registrados.`;
-        document.getElementById('paso3').classList.add('hidden');
+        document.getElementById('despedida').innerText = `Muchas gracias, ${document.getElementById('nombreProf').value}. Su colaboración como evaluador ha sido registrada con éxito.`;
+        document.getElementById('paso2').classList.add('hidden');
         document.getElementById('final').classList.remove('hidden');
     }
 </script>
