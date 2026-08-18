@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sustentaciones MIE – [GRUPO U01]</title>
+    <title>Sustentaciones MIE – [GRUPO L01 y L02]</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; }
         .box { max-width: 750px; background: white; margin: auto; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
@@ -17,7 +17,7 @@
 <body>
 
 <div class="box">
-    <h2>Selección de horario TRABAJO DE GRADO MIE – [GRUPO U01]</h2>
+    <h2>Selección de horario TRABAJO DE GRADO MIE – [GRUPO L01 y L02]</h2>
     <p style="text-align:center; font-weight:bold;">Tutora Dra. María del Pilar García Chitiva</p>
     
     <div id="paso1">
@@ -47,18 +47,28 @@
 </div>
 
 <script>
-    const URL_GAS = "https://script.google.com/macros/s/AKfycbzdjbKmNQ8l8iDxsnqQ-Dpc-7IZfZWYMsPZCAFsRpdemIPfhczSil74VDnnPcDYHlsQFw/exec"; // REEMPLAZA ESTO POR TU URL DE GOOGLE
+    const URL_GAS = "https://script.google.com/macros/s/AKfycbzdjbKmNQ8l8iDxsnqQ-Dpc-7IZfZWYMsPZCAFsRpdemIPfhczSil74VDnnPcDYHlsQFw/exec";
 
     const datos = [
-        { e: "Edna Beltrán, Mirbony Vasquez", t: "Innovación educativa a través de la gamificación...", d: "Juan Camilo Ortegón" },
-        { e: "Rolando Alfonso Méndez García, Eliana Pérez Sandoval, Sandra Duarte Duarte", t: "Gamificación analógica como estrategia didáctica...", d: "Jaime Alberto Castro Martínez" },
-        { e: "Kerly Marcela Orozco, Andrea Magaly Ospitia, María Elena Alape", t: "Saberes ancestrales y narrativas digitales...", d: "Carlos Sandoval" },
-        { e: "Sofía Muñoz Gil, Angela Moreno Córdoba, Lorena Serna Duque", t: "Aprender jugando: el poder de la gamificación...", d: "Aura Cabarcas" },
-        { e: "Miguel Ángel Estrada Ramos", t: "Percepciones sobre entornos gamificados (Gastronomía)", d: "Angela Maria Ramirez Rozo" },
-        { e: "Yecid Antonio Carvajal Zambrano", t: "Las Voces de Lagunetas: Historia oral de la vereda y sus familias", d: "Camilo Mendieta" },
-        { e: "Lady Mayerly Gutiérrez Ariza", t: "La Lectoescritura en la Educación Básica", d: "Isabel Villada" },
-        { e: "Marleny Franco Romero", t: "Percepciones entornos gamificados (Overcooked/Minecraft)", d: "Camilo Mendieta" },
-        { e: "Didier Alonso Díaz Aristizabal", t: "Competencias digitales Moodle", d: "Gustavo Adolfo Diaz Contreras" }
+        // 18 de agosto
+        { e: "Ana Carolina Pájaro Polo", t: "Estrategias innovadoras para el uso responsable de dispositivos tecnológicos...", d: "David Guillermo Barros Becerra", f: "18 de agosto" },
+        { e: "Brayan Fernando Enríquez Tulcán, Juan Sebastián Gómez Naspirán", t: "Estudio de caso sobre la implementación de simuladores química...", d: "Marleny Yojana Marín Morales", f: "18 de agosto" },
+        { e: "Cesar Augusto Alzate Victoria, Sharith Dayana Velásquez Pineda", t: "Transformando los recreos escolares en espacios de aprendizaje matemático...", d: "Lizeth Paola Pertuz Altamiranda", f: "18 de agosto" },
+        { e: "Cristina López Coronado, Diego Armando Velásquez Álvarez", t: "Estrategias de innovación pedagógica para fortalecer la inclusión...", d: "Álvaro José Tórres", f: "18 de agosto" },
+        { e: "Deliana Beatriz Cuesta Gómez, Keyla Vanessa Blandón Páez", t: "Transformación de las prácticas pedagógicas mediante recursos digitales...", d: "Mayra Katerin Lozano Penagos", f: "18 de agosto" },
+        { e: "Diana Carolina Currea Camargo", t: "Percepciones del rol docente y resistencias...", d: "José Areth Estévez Ceballos", f: "18 de agosto" },
+        { e: "Gloria Angelica Orrego Cardona, Marco Fidel Mosquera Quinto", t: "Estudio de caso sobre los factores asociados a la deserción escolar...", d: "Jimena Marcela Perdomo", f: "18 de agosto" },
+        { e: "Jefferson Cepeda Tarifa", t: "Fortalecimiento del pensamiento computacional en estudiantes indígenas...", d: "Deisy Lorena Gonzalez", f: "18 de agosto" },
+        { e: "Jennifer Paola Ballestas Mendoza, Stephanie Vanessa Molina Rayo, Heydy Bibiana Mariño Rodríguez", t: "Arte y emociones para sanar...", d: "Katherine Franco", f: "18 de agosto" },
+        // 19 de agosto
+        { e: "John Andreus Forero Cardona, Oscar Mauricio Santos Martínez", t: "Desarrollo del pensamiento creativo desde el cuerpo...", d: "Deisy Lorena Gonzalez", f: "19 de agosto" },
+        { e: "John Fredy López Ochoa, María Isabel Villada Gil", t: "Saberes territoriales y educación crítica en las narrativas...", d: "María Isabel Villada Gil", f: "19 de agosto" },
+        { e: "Lina Marcela Posso Hernández", t: "Diseño de una estrategia pedagógica basada en simulación clínica...", d: "Yenny Milena Mendoza Guzmán", f: "19 de agosto" },
+        { e: "Luz Mirian Chicangana Rengifo, Lenin Jamitt Paz Narváez, Yovanny Delgado Delgado", t: "Proyección de las prácticas pedagógicas interculturales...", d: "Tinalyd Andrea Bolaños Gallardo", f: "19 de agosto" },
+        { e: "Martha Constanza Casallas Herrera, Yalid Angélica López Riaño", t: "Exploración del alfabetismo emergente en la educación inicial...", d: "Cindy Julieth Martínez Ruiz", f: "19 de agosto" },
+        { e: "Nency María Nieves Noriega, Edilson Pacheco Navarro, Dionel Alirio García Bayona", t: "Estrategias Didácticas y Metodológicas: Un Reto para la Enseñanza de las Ciencias Sociales...", d: "Claudia Milena Ruiz Cepeda", f: "19 de agosto" },
+        { e: "Viviana Farley Barrera Rueda", t: "La Escritura Reflexiva como Estrategia Didáctica...", d: "Mónica Adelaida Lovera", f: "19 de agosto" },
+        { e: "Wendy Estefania Barrero Campos", t: "Aprendizajes socioemocionales del deporte del porrismo...", d: "Cristian Gustavo Gutierrez Pinzón", f: "19 de agosto" }
     ];
 
     let seleccionados = [];
@@ -72,7 +82,7 @@
                 <div class="proyecto">
                     <input type="checkbox" value="${i}" class="chk"> <b>${p.t}</b>
                     <div class="info"><b>Estudiantes:</b> ${p.e}</div>
-                    <div class="info"><b>Director original:</b> ${p.d}</div>
+                    <div class="info"><b>Director:</b> ${p.d} | <b>Día:</b> ${p.f}</div>
                 </div>`;
         });
         document.getElementById('paso1').classList.add('hidden');
@@ -86,37 +96,18 @@
         
         document.getElementById('paso2').classList.add('hidden');
         document.getElementById('paso3').classList.remove('hidden');
-
-        try {
-            const r = await fetch(URL_GAS + "?t=" + Date.now());
-            const cupos = await r.json();
-            document.getElementById('msgCupos').classList.add('hidden');
-            
-            seleccionados.forEach((p, i) => {
-                let html = `
-                    <div class="proyecto">
-                        <b>${p.t}</b>
-                        <div class="info">Estudiantes: ${p.e}</div>
-                        <select class="fsel" style="margin-top:10px;">`;
-                if((cupos["20-mayo"] || 0) < 6) html += `<option value="20 de mayo">20 de mayo (5:00 PM)</option>`;
-                if((cupos["19-mayo"] || 0) < 6) html += `<option value="19 de mayo">19 de mayo (5:00 PM)</option>`;
-                html += `</select></div>`;
-                document.getElementById('fechas').innerHTML += html;
-            });
-        } catch(e) {
-            document.getElementById('msgCupos').innerText = "Elija su horario:";
-            seleccionados.forEach(p => {
-                document.getElementById('fechas').innerHTML += `
-                    <div class="proyecto">
-                        <b>${p.t}</b>
-                        <div class="info">Estudiantes: ${p.e}</div>
-                        <select class="fsel">
-                            <option value="20 de mayo">20 de mayo</option>
-                            <option value="19 de mayo">19 de mayo</option>
-                        </select>
-                    </div>`;
-            });
-        }
+        document.getElementById('msgCupos').innerText = "Confirme la fecha de su proyecto:";
+        
+        document.getElementById('fechas').innerHTML = "";
+        seleccionados.forEach((p, i) => {
+            document.getElementById('fechas').innerHTML += `
+                <div class="proyecto">
+                    <b>${p.t}</b>
+                    <div class="info">Estudiantes: ${p.e}</div>
+                    <p><b>Fecha asignada:</b> ${p.f}</p>
+                    <input type="hidden" class="fsel" value="${p.f}">
+                </div>`;
+        });
     }
 
     async function enviar() {
@@ -124,15 +115,12 @@
         btn.disabled = true;
         btn.innerText = "Guardando...";
 
-        const selects = document.querySelectorAll('.fsel');
-        const payloadProyectos = seleccionados.map((p, i) => {
-            return {
-                titulo: p.t,
-                estudiantes: p.e, // Aquí van todos los nombres
-                director: p.d,    // Director de la tabla
-                fecha: selects[i].value
-            };
-        });
+        const payloadProyectos = seleccionados.map((p) => ({
+            titulo: p.t,
+            estudiantes: p.e,
+            director: p.d,
+            fecha: p.f
+        }));
 
         await fetch(URL_GAS, {
             method: 'POST',
@@ -144,7 +132,7 @@
             })
         });
 
-        document.getElementById('despedida').innerText = `Muchas gracias estimado profesor director de trabajo de grado, ${document.getElementById('nombreProf').value}.`;
+        document.getElementById('despedida').innerText = `Muchas gracias, ${document.getElementById('nombreProf').value}. Sus proyectos han sido registrados.`;
         document.getElementById('paso3').classList.add('hidden');
         document.getElementById('final').classList.remove('hidden');
     }
